@@ -3,26 +3,27 @@ import React, { useState, useRef, } from 'react';
 const InputFile = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
-  const maxTags = 10;
   const inputRef = useRef<HTMLInputElement>(null);
-  const separator = /[,;|\/]/;
+
+  const maxTags = 10;                                                   // จำนวนแท็กสูงสุด
+  const separator = /[,;|\/]/;                                          // เครื่องหมายคั่น
 
   const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
 
-      let tag = inputValue.trim().replace(/\s+/g, ' ');
+      let tag = inputValue.trim().replace(/\s+/g, ' ');                 // ตัดช่องว่าง
 
-      if (tag.length > 0 && tags.length < maxTags) {
+      if (tag.length > 0 && tags.length < maxTags) {                    // ตรวจสอบว่า tag ไม่ใช่ค่าว่าง และยังไม่เกินจำนวนสูงสุด
         const newTags = tag
-          .split(separator)
+          .split(separator)                                             // แยก tag ตามตัวคั่น
           .map((t: string) => t.trim().toLowerCase())
-          .filter((t: string) => t.length > 0 && !tags.includes(t));
+          .filter((t: string) => t.length > 0 && !tags.includes(t));    // ลบช่องว่าง และลบ tag ที่ซ้ำกัน
 
         const availableSpace = maxTags - tags.length;
-        const tagsToAdd = newTags.slice(0, availableSpace);
+        const tagsToAdd = newTags.slice(0, availableSpace);             // ตรวจสอบจำนวน tag ที่สามารถเพิ่มได้ และตัดให้ไม่เกินที่ตั้ง
 
-        if (tagsToAdd.length > 0) {
+        if (tagsToAdd.length > 0) {                                     // เพิ่ม tag ลง state และเคลียร์ input
           setTags((prevTags) => [...prevTags, ...tagsToAdd]);
           setInputValue('');
         }
@@ -31,18 +32,18 @@ const InputFile = () => {
   };
 
   const removeTag = (tagToRemove: string) => {
-    setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
+    setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));   // ลบแท็กที่ตรงกับค่าที่ส่งเข้ามา
   };
 
   const removeAllTags = () => {
-    setTags([]);
+    setTags([]);                                                            // เคลียร์แท็กทั้งหมด
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const remainingTags = maxTags - tags.length;
+  const remainingTags = maxTags - tags.length;                              // ใช้คำนวณเพื่อแสดงว่าเหลือแท็กให้เพิ่มได้อีกกี่อัน
 
   return (
     <div>
@@ -54,6 +55,7 @@ const InputFile = () => {
         <div className='content'>
           <p>Press enter or add tag</p>
           <ul>
+            {/* วนลูปแท็กใน state เพื่อแสดง tag ทีละตัว */}
             {tags.map((tag, index) => (
               <li key={index}>
                 {tag}
