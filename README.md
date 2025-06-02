@@ -1,9 +1,5 @@
 # คอมโพเนนต์หลักที่ใช้
-  src/
-  ├── component/
-  │   └── InputFile.tsx   // ไฟล์โค้ด
-  ├── App.css
-  └── App.tsx   
+  <pre> src/ ├── component/ │ └── <b>InputFile.tsx</b> # คอมโพเนนต์หลักสำหรับรับและแสดงแท็ก ├── <b>App.css</b> # ไฟล์สไตล์หลักของแอป └── <b>App.tsx</b> # ไฟล์หลักของแอปที่เรียกใช้ InputFile </pre>
 
 # คำสั่ง Run
 - npm run dev
